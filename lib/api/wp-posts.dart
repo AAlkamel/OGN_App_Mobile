@@ -1,21 +1,18 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<List> fetchPosts() async {
-  List posts = [];
-  try {
-    final http.Response response = await http.get(Uri.parse('https://ognreports.news/wp-json/wp/v2/posts'));
-     posts = json.decode(response.body);
-    // final response = await http.get(Uri.parse('https://ognreports.news/wp-json/wp/v2/posts'),headers: {'Accept':'application/json'});
-    // var dataJson = jsonDecode(response.body);
-
-    print(posts);
-
-
-  } catch(e) {
-    print(e);
-    throw 'Name is empty.';
+import '../models/post.dart';
+Future<List<Post>?> getPost()async{
+  http.Response posts =
+  await http.get(Uri.parse('https://ognreports.news/wp-json/wp/v2/posts'));
+  if(posts.statusCode==200){
+    // print(posts.body);
+    //for list
+    final parsed =json.decode(posts.body).cast<Map<String,dynamic>>();
+    return parsed.map<Post>((item)=>Post.fromJson(item)).toList();
+    // for single post
+    // return Post.fromJson(json.decode(posts.body));
+  }else{
+    throw Exception('error');
   }
-    return posts;
-
 }

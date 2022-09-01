@@ -1,10 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ogn_app/constant.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:html_unescape/html_unescape.dart';
+import 'package:ogn_app/models/post.dart';
 import 'package:ogn_app/widgets/home/post-card.dart';
-
 import '../../api/wp-posts.dart';
 
 class HomeBody extends StatefulWidget {
@@ -15,8 +12,17 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  late Future<List<Post>?> postData;
+  @override
+  initState(){
+    super.initState();
+    postData = getPost();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var unescape = HtmlUnescape();
+
     double width = MediaQuery.of(context).size.width;
     double imageWidth = width - 12.0;
     List<String> tags = [
@@ -24,45 +30,33 @@ class _HomeBodyState extends State<HomeBody> {
       'tags 02',
       'tags 03',
     ];
-    Future<List> _loadData() async {
-      List posts = [];
-      try {
-        // This is an open REST API endpoint for testing purposes
-        const apiUrl = 'https://ognreports.news/wp-json/wp/v2/posts';
 
-        final http.Response response = await http.get(Uri.parse(apiUrl));
-        posts = json.decode(response.body);
-      } catch (err) {
-        if (kDebugMode) {
-          print(err);
-        }
-      }
-
-      return posts;
-    }
     return SafeArea(
-      child: FutureBuilder(
-          future: fetchPosts(),
-          builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) =>
-          snapshot.hasData
-              ? ListView.builder(
-            // render the list
-            itemCount: snapshot.data!.length,
-            itemBuilder: (BuildContext context, index) => Card(
-              margin: const EdgeInsets.all(10),
-              // render list item
-              child: ListTile(
-                contentPadding: const EdgeInsets.all(10),
-                title: Text(snapshot.data![index]['title']['rendered'],style: TextStyle(color: Colors.amber),),
-                // subtitle: Text(snapshot.data![index]['body']),
-              ),
-            ),
-          )
-              : const Center(
-            // render the loading indicator
-            child: CircularProgressIndicator(),
-          ),
-      )
+      child: Center(
+        child:FutureBuilder<List<Post>?>(
+          future: postData,
+          builder: (context,snapshot){
+            if(snapshot.hasData){
+              // return Text(unescape.convert(snapshot.data![0].title));
+              //return Text(snapshot.data![0].title);
+              return ListView.builder(
+                  itemCount: snapshot.data?.length,
+                  itemBuilder:(context,index){
+                   // return Text(unescape.convert(snapshot.data![index].title));
+                    return postCard(tags);
+                  }
+              );
+            }else if(snapshot.hasError){
+              return Center(
+                child: Text('Server error', style: TextStyle(color: Colors.red[700]),),
+              );
+            }
+            else{
+              return CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
     );
   }
 }
