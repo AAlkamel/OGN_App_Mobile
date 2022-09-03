@@ -43,7 +43,7 @@ class _HomeBodyState extends State<HomeBody> {
                   itemCount: snapshot.data?.length,
                   itemBuilder:(context,index){
                    // return Text(unescape.convert(snapshot.data![index].title));
-                    return postCard(tags);
+                    return postCard(Post(id: snapshot.data![index].id, content: snapshot.data![index].content, image: snapshot.data![index].image, title: snapshot.data![index].title));
                   }
               );
             }else if(snapshot.hasError){
