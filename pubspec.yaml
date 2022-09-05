@@ -31,6 +31,8 @@ dependencies:
     sdk: flutter
   http:
   html_unescape:
+  flutter_html:
+
 
 
   # The following adds the Cupertino Icons font to your application.

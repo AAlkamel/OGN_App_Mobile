@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ogn_app/constant.dart';
-import 'screens/home_screen.dart';
+import './screens/post_detail_screen.dart';
+import './screens/home_screen.dart';
 
 void main() {
 
@@ -19,7 +20,12 @@ class MyApp extends StatelessWidget {
         // textTheme: GoogleFonts.cairoTextTheme(Theme.of(context).textTheme),
         primaryColor: ognColor,
       ),
-      home: const HomeScreen(),
+      // home: const HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (ctx)=> const HomeScreen(),
+        PostDetailsScreen.screenRoute :(ctx) => PostDetailsScreen()
+      },
     );
   }
 }

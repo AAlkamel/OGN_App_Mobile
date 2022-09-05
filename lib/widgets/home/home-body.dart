@@ -1,6 +1,8 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:ogn_app/models/post.dart';
+import 'package:ogn_app/screens/post_detail_screen.dart';
 import 'package:ogn_app/widgets/home/post-card.dart';
 import '../../api/wp-posts.dart';
 
@@ -18,18 +20,15 @@ class _HomeBodyState extends State<HomeBody> {
     super.initState();
     postData = getPost();
   }
-
+  void selectPost(int postId){
+    Navigator.of(context).pushNamed(PostDetailsScreen.screenRoute , arguments:postId);
+  }
   @override
   Widget build(BuildContext context) {
     var unescape = HtmlUnescape();
 
     double width = MediaQuery.of(context).size.width;
     double imageWidth = width - 12.0;
-    List<String> tags = [
-      'tags 01',
-      'tags 02',
-      'tags 03',
-    ];
 
     return SafeArea(
       child: Center(
@@ -43,7 +42,10 @@ class _HomeBodyState extends State<HomeBody> {
                   itemCount: snapshot.data?.length,
                   itemBuilder:(context,index){
                    // return Text(unescape.convert(snapshot.data![index].title));
-                    return postCard(Post(id: snapshot.data![index].id, content: snapshot.data![index].content, image: snapshot.data![index].image, title: snapshot.data![index].title));
+                    return InkWell(
+                      onTap:() => selectPost(snapshot.data![index].id),
+                      child: postCard(Post(id: snapshot.data![index].id, content: snapshot.data![index].content, image: snapshot.data![index].image, title: snapshot.data![index].title),),
+                    );
                   }
               );
             }else if(snapshot.hasError){
