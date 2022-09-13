@@ -150,6 +150,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
 
                                             Html(
                                                 data: snapshot.data!.content,
+                                                // customRenders: {},
                                                 customRender: {
                                                   "iframe": (RenderContext context, Widget child) {
                                                     final attrs = context.tree.element?.attributes;

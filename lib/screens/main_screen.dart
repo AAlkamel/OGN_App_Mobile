@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _screens = [
     const homeScreen(),
     const NewsScreen(),
-    const LiveScreen(),
+     LiveScreen(),
     const ProgramsScreen(),
 
 
