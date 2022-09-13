@@ -18,9 +18,10 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   initState(){
     super.initState();
-    postData = getPost();
+    postData = getPost('https://ognreports.news/wp-json/wp/v2/posts');
+
   }
-  void selectPost(int postId){
+  void selectPost(int postId ,String title, String content, String image){
     Navigator.of(context).pushNamed(PostDetailsScreen.screenRoute , arguments:postId);
   }
   @override
@@ -43,7 +44,7 @@ class _HomeBodyState extends State<HomeBody> {
                   itemBuilder:(context,index){
                    // return Text(unescape.convert(snapshot.data![index].title));
                     return InkWell(
-                      onTap:() => selectPost(snapshot.data![index].id),
+                      onTap:() => selectPost(snapshot.data![index].id,snapshot.data![index].title,snapshot.data![index].content,snapshot.data![index].image),
                       child: postCard(Post(id: snapshot.data![index].id, content: snapshot.data![index].content, image: snapshot.data![index].image, title: snapshot.data![index].title),),
                     );
                   }

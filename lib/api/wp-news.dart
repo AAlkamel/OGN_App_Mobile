@@ -2,9 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../models/post.dart';
-Future<List<Post>?> getPost(String s)async{
+Future<List<Post>?> getPost(String url)async{
   http.Response posts =
-  await http.get(Uri.parse(s));
+  await http.get(Uri.parse(url));
   if(posts.statusCode==200){
     print(posts.headers);
     //for list

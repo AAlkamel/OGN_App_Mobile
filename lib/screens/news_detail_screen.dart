@@ -1,28 +1,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:ogn_app/api/wp-single-post.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../api/wp-single-news.dart';
 import '../constant.dart';
 import '../models/post.dart';
 import '../widgets/home/post-card.dart';
-class PostDetailsScreen extends StatefulWidget {
- static const screenRoute = '/post-details';
-  const PostDetailsScreen({Key? key}) : super(key: key);
+class NewsDetailsScreen extends StatefulWidget {
+  static const screenRoute = '/news-details';
+  const NewsDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  State<PostDetailsScreen> createState() => _PostDetailsScreenState();
+  State<NewsDetailsScreen> createState() => _NewsDetailsScreenState();
 }
 
-class _PostDetailsScreenState extends State<PostDetailsScreen> {
- late Future<Post?> post;
- late YoutubePlayerController _controller;
- late String video;
- late  String content = "-";
- @override
+class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
+  late Future<Post?> post;
+  late YoutubePlayerController _controller;
+  late String video;
+  late  String content = "-";
+  @override
   void initState() {
-   content = getVideo(content);
+    content = getVideo(content);
     _controller = YoutubePlayerController(initialVideoId: convertedUrl(content),flags: const YoutubePlayerFlags(autoPlay: false));
 
     super.initState();
@@ -35,7 +35,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final postId = ModalRoute.of(context)!.settings.arguments as int;
-    post = getSinglePost(postId);
+    post = getSingleNews(postId);
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
@@ -239,46 +239,46 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   }
 
   // functions
- String convertedUrl(url){
-   return YoutubePlayer.convertUrlToId(url).toString();
- }
- String getYouTubeUrl(String content) {
-   RegExp regExp = RegExp(
-       r'((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?'
-   );
-   String? matches = regExp.stringMatch(content);
-   if (matches == null) {
-     return ''; // Always returns here while the video URL is in the content paramter
-   }
-   final String youTubeUrl = matches;
-   return youTubeUrl;
- }
- void showConsoleUsingPrint(text) {
+  String convertedUrl(url){
+    return YoutubePlayer.convertUrlToId(url).toString();
+  }
+  String getYouTubeUrl(String content) {
+    RegExp regExp = RegExp(
+        r'((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?'
+    );
+    String? matches = regExp.stringMatch(content);
+    if (matches == null) {
+      return ''; // Always returns here while the video URL is in the content paramter
+    }
+    final String youTubeUrl = matches;
+    return youTubeUrl;
+  }
+  void showConsoleUsingPrint(text) {
 
-   print(text);
- }
- String getVideo(content){
-   int idx = -1;
-   try {
+    print(text);
+  }
+  String getVideo(content){
+    int idx = -1;
+    try {
       idx = content.indexOf("<iframe");
-   } catch (e) {
-     print('There is an exception.');
-   }
+    } catch (e) {
+      print('There is an exception.');
+    }
 
-   if(idx!= -1){
-     var c1 =content.substring(idx+1).trim();
-     int i1  = c1.indexOf('src=');
-     if(i1 != -1){
-       var c2 =c1.substring(i1 +5).trim();
-       int i2  = c2.indexOf('" ');
-       return  c2.substring(0 ,i2).trim();
-     }else{return"-";}
+    if(idx!= -1){
+      var c1 =content.substring(idx+1).trim();
+      int i1  = c1.indexOf('src=');
+      if(i1 != -1){
+        var c2 =c1.substring(i1 +5).trim();
+        int i2  = c2.indexOf('" ');
+        return  c2.substring(0 ,i2).trim();
+      }else{return"-";}
 
-   }else{
-     return"-";
-   }
+    }else{
+      return"-";
+    }
 
- }
+  }
 }
 
 

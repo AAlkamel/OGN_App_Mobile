@@ -1,31 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../constant.dart';
 
-AppBar MyAppBar() {
+AppBar MyAppBar(String title) {
   return AppBar(
-    backgroundColor: ognColorDark,
-    centerTitle: false,
-    title:
-    // Text('OGN'),
-    Image.asset(
-      'images/1024.png',
-      fit: BoxFit.cover,
-      width: 60,
-    ),
-    actions: <Widget>[
-      IconButton(
-        icon: const Icon(Icons.menu),
-        tooltip: '',
-        onPressed: () {
-
-        },
-      ),
+    elevation: 2,
+    centerTitle: true,
+    backgroundColor: darkColor,
+    title:  Text(title),
+    actions: [
+      IconButton(onPressed: ()=>{}, icon: const Icon(Icons.notifications,))
     ],
-    // bottom: const TabBar(tabs: [
-    //   Tab(
-    //     text: 'OGN NEWS',
-    //   )
-    // ]),
-
   );
 }
