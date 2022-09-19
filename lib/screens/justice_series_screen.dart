@@ -5,10 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:ogn_app/screens/post_detail_screen.dart';
 
 import '../models/post.dart';
+import '../widgets/general/app_bar.dart';
+import '../widgets/general/app_drawer.dart';
 import '../widgets/home/post-card.dart';
 import 'news_detail_screen.dart';
 
 class JusticeSeriesScreen extends StatefulWidget {
+  static const screenRoute = '/justice-series';
   const JusticeSeriesScreen({Key? key}) : super(key: key);
 
   @override
@@ -126,9 +129,8 @@ class _JusticeSeriesScreenState extends State<JusticeSeriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Kindacode.com'),
-      // ),
+      drawer: AppDrawer(),
+      appBar: MyAppBar('Justice Series'),
       body: _isFirstLoadRunning
           ? const Center(
         child: CircularProgressIndicator(),

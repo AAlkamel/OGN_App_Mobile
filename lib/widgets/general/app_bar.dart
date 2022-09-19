@@ -5,10 +5,10 @@ AppBar MyAppBar(String title) {
   return AppBar(
     elevation: 2,
     centerTitle: true,
-    backgroundColor: darkColor,
+    backgroundColor: ognColor,
     title:  Text(title),
-    actions: [
-      IconButton(onPressed: ()=>{}, icon: const Icon(Icons.notifications,))
-    ],
+    // actions: [
+    //   IconButton(onPressed: ()=>{}, icon: const Icon(Icons.menu,))
+    // ],
   );
 }

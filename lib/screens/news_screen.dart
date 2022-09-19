@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:ogn_app/widgets/general/app_drawer.dart';
 
 import '../constant.dart';
 import '../models/post.dart';
@@ -10,6 +11,7 @@ import '../widgets/home/post-card.dart';
 import 'news_detail_screen.dart';
 
 class NewsScreen extends StatefulWidget {
+  static const screenRoute = '/news';
   const NewsScreen({Key? key}) : super(key: key);
 
   @override
@@ -128,7 +130,7 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar('News'),
-
+      drawer: AppDrawer(),
       body: _isFirstLoadRunning
           ? const Center(
               child: CircularProgressIndicator(),

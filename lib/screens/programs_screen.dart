@@ -6,6 +6,7 @@ import 'package:ogn_app/screens/perspectives_screen.dart';
 import 'package:ogn_app/screens/tafsear_screen.dart';
 import 'package:ogn_app/screens/the_source_screen.dart';
 
+import '../widgets/general/app_drawer.dart';
 import 'bk_show_screen.dart';
 import 'justice_series_screen.dart';
 import 'khutbah_screen.dart';
@@ -51,24 +52,24 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
     return DefaultTabController(
       length: _screens.length,
       child: Scaffold(
+        // drawer: AppDrawer(),
         appBar: AppBar(
-          elevation: 2,
-          centerTitle: true,
+          elevation: 0,
+          automaticallyImplyLeading: false,
           backgroundColor: darkColor,
-          title: const Text('Programs'),
-          bottom: TabBar(
-            indicatorColor: ognColor,
+        flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+        TabBar(
+        indicatorColor: yColor,
             // labelColor: yColor,
             isScrollable: true,
             tabs: _tabs,
-          ),
+    )
+    ],
+    ),
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   onTap:selectScreen ,
-        //   items: const [
-        //   BottomNavigationBarItem(icon: Icon(Icons.book),label: 'Understanding the Quran Made Simple'),
-        //   BottomNavigationBarItem(icon: Icon(Icons.book),label: 'The Source'),
-        // ],),
+
         body: TabBarView(
           children: _screens,
         ),
