@@ -9,7 +9,8 @@ var unescape = HtmlUnescape();
 String wordNum(String content,int num){
   List<String> wordList = content.split(" ");
   String trimContent ="";
-  for (int i = 0; i < num ; i++) {
+  int number =  wordList.length >  num ?num:wordList.length;
+  for (int i = 0; i < number ; i++) {
     trimContent = trimContent + " " + wordList[i];
   }
   return trimContent ;
@@ -95,7 +96,8 @@ Container newsCard(Post post ){
                       //     }
                       // ),
                       Text(
-                        // textAlign: TextAlign.center,
+                        // '  ',
+                        textAlign: TextAlign.center,
                         unescape.convert(
                             wordNum(parse(post.content).getElementsByTagName('p')[0].innerHtml,23)
 

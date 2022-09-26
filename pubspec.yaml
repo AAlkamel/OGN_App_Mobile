@@ -39,7 +39,7 @@ dependencies:
   flutter_vlc_player:
   google_fonts: ^2.0.0
   rename: ^2.0.1
-  better_player:
+  #  better_player:
   webview_flutter:
   onesignal_flutter: ^3.4.1
 
